@@ -27,14 +27,16 @@ package org.spongepowered.api.world.extent;
 import com.flowpowered.math.vector.Vector3d;
 import com.flowpowered.math.vector.Vector3i;
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableList;
 import org.spongepowered.api.block.BlockSnapshot;
 import org.spongepowered.api.block.ScheduledBlockUpdate;
 import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.DataHolder;
-import org.spongepowered.api.data.DataManipulator;
-import org.spongepowered.api.data.DataPriority;
 import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.Property;
+import org.spongepowered.api.data.manipulator.DataManipulator;
+import org.spongepowered.api.data.manipulator.ImmutableDataManipulator;
+import org.spongepowered.api.data.merge.MergeFunction;
 import org.spongepowered.api.item.inventory.ItemStack;
 import org.spongepowered.api.service.persistence.InvalidDataException;
 import org.spongepowered.api.util.Direction;
@@ -608,7 +610,7 @@ public interface Extent extends EntityUniverse, TileEntityVolume, WeatherUnivers
      * @param <T> The type of data
      * @return An instance of the class, if not available
      */
-    <T extends DataManipulator<T>> Optional<T> getData(Vector3i position, Class<T> dataClass);
+    <T extends DataManipulator<T, ?>> Optional<T> getData(Vector3i position, Class<T> dataClass);
 
     /**
      * Gets an instance of the given data class for given block at the location.
@@ -624,7 +626,7 @@ public interface Extent extends EntityUniverse, TileEntityVolume, WeatherUnivers
      * @param <T> The type of data
      * @return An instance of the class, if not available
      */
-    <T extends DataManipulator<T>> Optional<T> getData(int x, int y, int z, Class<T> dataClass);
+    <T extends DataManipulator<T, ?>> Optional<T> getData(int x, int y, int z, Class<T> dataClass);
 
     /**
      * Gets or creates a new {@link DataManipulator} that can be accepted by
@@ -641,7 +643,7 @@ public interface Extent extends EntityUniverse, TileEntityVolume, WeatherUnivers
      * @param <T> The type of data
      * @return An instance of the class, if not available
      */
-    <T extends DataManipulator<T>> Optional<T> getOrCreate(Vector3i position, Class<T> manipulatorClass);
+    <T extends DataManipulator<T, ?>> Optional<T> getOrCreate(Vector3i position, Class<T> manipulatorClass);
 
     /**
      * Gets or creates a new {@link DataManipulator} that can be accepted by
@@ -660,7 +662,7 @@ public interface Extent extends EntityUniverse, TileEntityVolume, WeatherUnivers
      * @param <T> The type of data
      * @return An instance of the class, if not available
      */
-    <T extends DataManipulator<T>> Optional<T> getOrCreate(int x, int y, int z, Class<T> manipulatorClass);
+    <T extends DataManipulator<T, ?>> Optional<T> getOrCreate(int x, int y, int z, Class<T> manipulatorClass);
 
     /**
      * Attempts to remove the given {@link DataManipulator} represented by
@@ -671,10 +673,9 @@ public interface Extent extends EntityUniverse, TileEntityVolume, WeatherUnivers
      *
      * @param position The position of the block
      * @param manipulatorClass The data class
-     * @param <T> The type of data
      * @return If the manipulator was removed
      */
-    <T extends DataManipulator<T>> boolean remove(Vector3i position, Class<T> manipulatorClass);
+    DataTransactionResult remove(Vector3i position, Class<? extends DataManipulator<?, ?>> manipulatorClass);
 
     /**
      * Attempts to remove the given {@link DataManipulator} represented by
@@ -687,10 +688,9 @@ public interface Extent extends EntityUniverse, TileEntityVolume, WeatherUnivers
      * @param y The Y position
      * @param z The Z position
      * @param manipulatorClass The data class
-     * @param <T> The type of data
      * @return If the manipulator was removed
      */
-    <T extends DataManipulator<T>> boolean remove(int x, int y, int z, Class<T> manipulatorClass);
+    DataTransactionResult remove(int x, int y, int z, Class<? extends DataManipulator<?, ?>> manipulatorClass);
 
     /**
      * Checks if the given {@link DataManipulator} class is able to represent
@@ -698,11 +698,10 @@ public interface Extent extends EntityUniverse, TileEntityVolume, WeatherUnivers
      *
      * @param position The position of the block
      * @param manipulatorClass The data class
-     * @param <T> The type of data
      * @return True if the block at the given position can accept the
      *     {@link DataManipulator} object
      */
-    <T extends DataManipulator<T>> boolean isCompatible(Vector3i position, Class<T> manipulatorClass);
+    boolean isCompatible(Vector3i position, Class<? extends DataManipulator<?, ?>> manipulatorClass);
 
     /**
      * Checks if the given {@link DataManipulator} class is able to represent
@@ -712,51 +711,10 @@ public interface Extent extends EntityUniverse, TileEntityVolume, WeatherUnivers
      * @param y The Y position
      * @param z The Z position
      * @param manipulatorClass The data class
-     * @param <T> The type of data
      * @return True if the block at the given position can accept the
      *     {@link DataManipulator} object
      */
-    <T extends DataManipulator<T>> boolean isCompatible(int x, int y, int z, Class<T> manipulatorClass);
-
-    /**
-     * Offers the given {@link DataManipulator} to the block at the given
-     * position.
-     *
-     * <p>In the event that the {@link DataManipulator} contains data that
-     * would otherwise overlap existing data on the block at the given
-     * position, a default {@link DataPriority#DATA_MANIPULATOR} is used.</p>
-     *
-     * <p>If any data is rejected or existing data is replaced, the
-     * {@link DataTransactionResult} will retain the rejected and replaced
-     * data.</p>
-     *
-     * @param position The position of the block
-     * @param manipulatorData The manipulator data to offer
-     * @param <T> The type of manipulator data
-     * @return The transaction result
-     */
-    <T extends DataManipulator<T>> DataTransactionResult offer(Vector3i position, T manipulatorData);
-
-    /**
-     * Offers the given {@link DataManipulator} to the block at the given
-     * position.
-     *
-     * <p>In the event that the {@link DataManipulator} contains data that
-     * would otherwise overlap existing data on the block at the given
-     * position, a default {@link DataPriority#DATA_MANIPULATOR} is used.</p>
-     *
-     * <p>If any data is rejected or existing data is replaced, the
-     * {@link DataTransactionResult} will retain the rejected and replaced
-     * data.</p>
-     *
-     * @param x The X position
-     * @param y The Y position
-     * @param z The Z position
-     * @param manipulatorData The manipulator data to offer
-     * @param <T> The type of manipulator data
-     * @return The transaction result
-     */
-    <T extends DataManipulator<T>> DataTransactionResult offer(int x, int y, int z, T manipulatorData);
+    boolean isCompatible(int x, int y, int z, Class<? extends DataManipulator<?, ?>> manipulatorClass);
 
     /**
      * Offers the given {@link DataManipulator} to the block at the given
@@ -768,11 +726,9 @@ public interface Extent extends EntityUniverse, TileEntityVolume, WeatherUnivers
      *
      * @param position The position of the block
      * @param manipulatorData The manipulator data to offer
-     * @param priority The data priority to use
-     * @param <T> The type of manipulator data
      * @return The transaction result
      */
-    <T extends DataManipulator<T>> DataTransactionResult offer(Vector3i position, T manipulatorData, DataPriority priority);
+    DataTransactionResult offer(Vector3i position, DataManipulator<?, ?> manipulatorData);
 
     /**
      * Offers the given {@link DataManipulator} to the block at the given
@@ -786,11 +742,41 @@ public interface Extent extends EntityUniverse, TileEntityVolume, WeatherUnivers
      * @param y The Y position
      * @param z The Z position
      * @param manipulatorData The manipulator data to offer
-     * @param priority The data priority to use
-     * @param <T> The type of manipulator data
      * @return The transaction result
      */
-    <T extends DataManipulator<T>> DataTransactionResult offer(int x, int y, int z, T manipulatorData, DataPriority priority);
+    DataTransactionResult offer(int x, int y, int z, DataManipulator<?, ?> manipulatorData);
+
+    /**
+     * Offers the given {@link DataManipulator} to the block at the given
+     * position.
+     *
+     * <p>If any data is rejected or existing data is replaced, the
+     * {@link DataTransactionResult} will retain the rejected and replaced
+     * data.</p>
+     *
+     * @param position The position of the block
+     * @param manipulatorData The manipulator data to offer
+     * @param mergeFunction The merge function to resolve conflicts
+     * @return The transaction result
+     */
+    DataTransactionResult offer(Vector3i position, DataManipulator<?, ?> manipulatorData, MergeFunction mergeFunction);
+
+    /**
+     * Offers the given {@link DataManipulator} to the block at the given
+     * position.
+     *
+     * <p>If any data is rejected or existing data is replaced, the
+     * {@link DataTransactionResult} will retain the rejected and replaced
+     * data.</p>
+     *
+     * @param x The X position
+     * @param y The Y position
+     * @param z The Z position
+     * @param manipulatorData The manipulator data to offer
+     * @param mergeFunction The merge function to resolve conflicts
+     * @return The transaction result
+     */
+    DataTransactionResult offer(int x, int y, int z, DataManipulator<?, ?> manipulatorData, MergeFunction mergeFunction);
 
     /**
      * Gets an copied collection of all known {@link DataManipulator}s
@@ -802,7 +788,7 @@ public interface Extent extends EntityUniverse, TileEntityVolume, WeatherUnivers
      * @return A collection of copied data manipulators belonging to the block
      *     at the given position
      */
-    Collection<DataManipulator<?>> getManipulators(Vector3i position);
+    Collection<DataManipulator<?, ?>> getManipulators(Vector3i position);
 
     /**
      * Gets an copied collection of all known {@link DataManipulator}s
@@ -816,7 +802,7 @@ public interface Extent extends EntityUniverse, TileEntityVolume, WeatherUnivers
      * @return A collection of copied data manipulators belonging to the block
      *     at the given position
      */
-    Collection<DataManipulator<?>> getManipulators(int x, int y, int z);
+    ImmutableList<ImmutableDataManipulator<?, ?>> getManipulators(int x, int y, int z);
 
     /**
      * Attempts to retrieve a specific {@link Property} type of this the block

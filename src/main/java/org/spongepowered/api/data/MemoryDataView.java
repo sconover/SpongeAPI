@@ -184,6 +184,7 @@ public class MemoryDataView implements DataView {
     }
 
     @Override
+    @SuppressWarnings("rawtypes")
     public DataView set(DataQuery path, Object value) {
         checkNotNull(path, "path");
         checkNotNull(value, "value");
@@ -322,6 +323,7 @@ public class MemoryDataView implements DataView {
     }
 
     @Override
+    @SuppressWarnings("rawtypes")
     public DataView createView(DataQuery path, Map<?, ?> map) {
         checkNotNull(path, "path");
         DataView section = createView(path);
@@ -348,7 +350,7 @@ public class MemoryDataView implements DataView {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public Optional<? extends Map<?, ?>> getMap(DataQuery path) {
         Optional<Object> val = get(path);
         if (val.isPresent()) {
