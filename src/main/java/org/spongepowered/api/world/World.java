@@ -164,11 +164,11 @@ public interface World extends Extent, Viewer, Contextual, Identifiable {
     Map<String, String> getGameRules();
 
     /**
-     * Returns the {@link Dimension} of this world.
+     * Returns the {@link DimensionType} of this world.
      *
-     * @return The {@link Dimension}
+     * @return The {@link DimensionType}
      */
-    Dimension getDimension();
+    DimensionType getDimension();
 
     /**
      * Gets the {@link WorldGenerator} for this world.
