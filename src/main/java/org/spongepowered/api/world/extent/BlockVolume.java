@@ -153,4 +153,8 @@ public interface BlockVolume {
      */
     BlockType getBlockType(int x, int y, int z);
 
+    MutableBlockVolume getBlockCopy();
+
+    ImmutableBlockVolume getImmutableBlockCopy();
+
 }

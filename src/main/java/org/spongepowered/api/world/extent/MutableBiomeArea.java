@@ -24,6 +24,7 @@
  */
 package org.spongepowered.api.world.extent;
 
+import com.flowpowered.math.matrix.Matrix3d;
 import com.flowpowered.math.vector.Vector2i;
 import org.spongepowered.api.util.PositionOutOfBoundsException;
 import org.spongepowered.api.world.biome.BiomeType;
@@ -55,4 +56,13 @@ public interface MutableBiomeArea extends BiomeArea {
      *     bounds of the area
      */
     void setBiome(int x, int z, BiomeType biome);
+
+    MutableBiomeArea getBiomeView(Vector2i newMin, Vector2i newMax);
+
+    MutableBiomeArea getBiomeView(Matrix3d transform);
+
+    MutableBiomeArea getRelativeBiomeView();
+
+    UnmodifiableBiomeArea getUnmodifiableBiomeView();
+
 }

@@ -103,4 +103,9 @@ public interface BiomeArea {
      *     bounds of the area
      */
     BiomeType getBiome(int x, int z);
+
+    MutableBiomeArea getBiomeCopy();
+
+    ImmutableBiomeArea getImmutableBiomeCopy();
+
 }

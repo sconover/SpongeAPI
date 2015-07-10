@@ -24,45 +24,21 @@
  */
 package org.spongepowered.api.world.extent;
 
-import com.flowpowered.math.matrix.Matrix4d;
-import com.flowpowered.math.vector.Vector3i;
-import org.spongepowered.api.block.BlockType;
+import com.flowpowered.math.matrix.Matrix3d;
+import com.flowpowered.math.vector.Vector2i;
 
 /**
- * A volume containing blocks that can be accessed and modified.
+ * An area containing biomes that can be accessed but not modified.
+ * The data may be changed by other processes.
  *
- * @see BlockVolume
+ * @see BiomeArea
  */
-public interface MutableBlockVolume extends BlockVolume {
+public interface UnmodifiableBiomeArea extends BiomeArea {
 
-    /**
-     * Replace the block at this position by a new type.
-     *
-     * <p>This will remove any extended block data at the given position.</p>
-     *
-     * @param position The position of the block
-     * @param type The new type
-     */
-    void setBlockType(Vector3i position, BlockType type);
+    UnmodifiableBiomeArea getBiomeView(Vector2i newMin, Vector2i newMax);
 
-    /**
-     * Replace the block at this position by a new type.
-     *
-     * <p>This will remove any extended block data at the given position.</p>
-     *
-     * @param x The X position
-     * @param y The Y position
-     * @param z The Z position
-     * @param type The new type
-     */
-    void setBlockType(int x, int y, int z, BlockType type);
+    UnmodifiableBiomeArea getBiomeView(Matrix3d transform);
 
-    MutableBlockVolume getBlockView(Vector3i newMin, Vector3i newMax);
-
-    MutableBlockVolume getBlockView(Matrix4d transform);
-
-    MutableBlockVolume getRelativeBlockView();
-
-    UnmodifiableBlockVolume getUnmodifiableBlockView();
+    UnmodifiableBiomeArea getRelativeBiomeView();
 
 }
