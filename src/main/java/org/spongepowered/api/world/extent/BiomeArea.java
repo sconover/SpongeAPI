@@ -106,6 +106,8 @@ public interface BiomeArea {
 
     MutableBiomeArea getBiomeCopy();
 
+    MutableBiomeArea getBiomeCopy(StorageType type);
+
     ImmutableBiomeArea getImmutableBiomeCopy();
 
 }

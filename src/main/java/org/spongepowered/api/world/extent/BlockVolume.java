@@ -155,6 +155,8 @@ public interface BlockVolume {
 
     MutableBlockVolume getBlockCopy();
 
+    MutableBlockVolume getBlockCopy(StorageType type);
+
     ImmutableBlockVolume getImmutableBlockCopy();
 
 }
