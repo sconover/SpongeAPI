@@ -26,6 +26,7 @@ package org.spongepowered.api.world.extent;
 
 import com.flowpowered.math.matrix.Matrix4d;
 import com.flowpowered.math.vector.Vector3i;
+import org.spongepowered.api.block.BlockState;
 import org.spongepowered.api.block.BlockType;
 import org.spongepowered.api.util.PositionOutOfBoundsException;
 
@@ -35,6 +36,28 @@ import org.spongepowered.api.util.PositionOutOfBoundsException;
  * @see BlockVolume
  */
 public interface MutableBlockVolume extends BlockVolume {
+
+    /**
+     * Sets the block at the given position in the world.
+     *
+     * @param position The position
+     * @param block The block
+     * @throws PositionOutOfBoundsException If the position is outside of the
+     *     bounds of the volume
+     */
+    void setBlock(Vector3i position, BlockState block);
+
+    /**
+     * Sets the block at the given position in the world.
+     *
+     * @param x The X position
+     * @param y The Y position
+     * @param z The Z position
+     * @param block The block
+     * @throws PositionOutOfBoundsException If the position is outside of the
+     *     bounds of the volume
+     */
+    void setBlock(int x, int y, int z, BlockState block);
 
     /**
      * Replace the block at this position by a new type.

@@ -104,28 +104,6 @@ public interface BlockVolume {
     BlockState getBlock(int x, int y, int z);
 
     /**
-     * Sets the block at the given position in the world.
-     *
-     * @param position The position
-     * @param block The block
-     * @throws PositionOutOfBoundsException If the position is outside of the
-     *     bounds of the volume
-     */
-    void setBlock(Vector3i position, BlockState block);
-
-    /**
-     * Sets the block at the given position in the world.
-     *
-     * @param x The X position
-     * @param y The Y position
-     * @param z The Z position
-     * @param block The block
-     * @throws PositionOutOfBoundsException If the position is outside of the
-     *     bounds of the volume
-     */
-    void setBlock(int x, int y, int z, BlockState block);
-
-    /**
      * Get the base type of block.
      *
      * <p>The type does not include block data such as the contents of
