@@ -153,10 +153,30 @@ public interface BlockVolume {
      */
     BlockType getBlockType(int x, int y, int z);
 
+    /**
+     * Returns a mutable copy of the blocks stored in this volume.
+     * This uses the default storage type of {@link StorageType#STANDARD}.
+     *
+     * @return A copy of the blocks
+     */
     MutableBlockVolume getBlockCopy();
 
+    /**
+     * Returns a mutable copy of the blocks stored in this volume.
+     * This uses the provided storage type.
+     *
+     * @param type The type of storage used by the new blocks
+     * @return A copy of the blocks
+     */
     MutableBlockVolume getBlockCopy(StorageType type);
 
+    /**
+     * Returns an immutable copy of the blocks stored in this volume.
+     * This uses some internal storage solution that is thread-safe
+     * by nature.
+     *
+     * @return An immutable copy of the blocks
+     */
     ImmutableBlockVolume getImmutableBlockCopy();
 
 }

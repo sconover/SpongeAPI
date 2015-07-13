@@ -104,10 +104,30 @@ public interface BiomeArea {
      */
     BiomeType getBiome(int x, int z);
 
+    /**
+     * Returns a mutable copy of the biomes stored in this area.
+     * This uses the default storage type of {@link StorageType#STANDARD}.
+     *
+     * @return A copy of the biomes
+     */
     MutableBiomeArea getBiomeCopy();
 
+    /**
+     * Returns a mutable copy of the biomes stored in this area.
+     * This uses the provided storage type.
+     *
+     * @param type The type of storage used by the new biomes
+     * @return A copy of the biomes
+     */
     MutableBiomeArea getBiomeCopy(StorageType type);
 
+    /**
+     * Returns an immutable copy of the biomes stored in this area.
+     * This uses some internal storage solution that is thread-safe
+     * by nature.
+     *
+     * @return An immutable copy of the biomes
+     */
     ImmutableBiomeArea getImmutableBiomeCopy();
 
 }

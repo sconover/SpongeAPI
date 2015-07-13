@@ -49,10 +49,36 @@ import java.util.Collection;
  */
 public interface Extent extends EntityUniverse, TileEntityVolume, WeatherUniverse, MutableBiomeArea, Identifiable {
 
+    /**
+     * Returns a new extent that is the same or smaller than the current
+     * extent. This does not copy anything, it only provides a new view
+     * of the storage.
+     *
+     * @param newMin The new minimum coordinates in this extent
+     * @param newMax The new maximum coordinates in this extent
+     * @return The new extent with the new bounds
+     */
     Extent getExtentView(Vector3i newMin, Vector3i newMax);
 
+    /**
+     * Returns a new extent that is viewed through some transformation.
+     * This does not copy anything, it only provides a new view of the
+     * storage.
+     *
+     * @param transform The transformation to be applied, encoded in a matrix.
+     *     A 4D matrix is used so that translations can be included in it.
+     * @return The new extent with the transform
+     */
     Extent getExtentView(Matrix4d transform);
 
+    /**
+     * Returns a new extent that is translated so that
+     * {@link Extent#getBlockMin()} returns {@link Vector3i#ZERO}.
+     * This does not copy anything, it only provides a new view of the
+     * storage.
+     *
+     * @return The new extent with its block minimum at zero
+     */
     Extent getRelativeExtentView();
 
     /**
