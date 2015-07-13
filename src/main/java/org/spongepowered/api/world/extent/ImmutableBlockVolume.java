@@ -37,9 +37,9 @@ import org.spongepowered.api.util.PositionOutOfBoundsException;
 public interface ImmutableBlockVolume extends BlockVolume {
 
     /**
-     * Returns a new volume that is the same or smaller than the current area.
-     * This does not copy the blocks, it only provides a new view of the
-     * storage.
+     * Returns a new volume that is the same or smaller than the current
+     * volume. This does not copy the blocks, it only provides a new view
+     * of the storage.
      *
      * @param newMin The new minimum coordinates in this volume
      * @param newMax The new maximum coordinates in this volume
@@ -47,6 +47,7 @@ public interface ImmutableBlockVolume extends BlockVolume {
      * @throws PositionOutOfBoundsException If the new minimum and maximum
      *     are outside the current volume
      */
+    @Override
     ImmutableBlockVolume getBlockView(Vector3i newMin, Vector3i newMax);
 
     /**
@@ -58,6 +59,7 @@ public interface ImmutableBlockVolume extends BlockVolume {
      *     A 4D matrix is used so that translations can be included in it.
      * @return The new volume with the transform
      */
+    @Override
     ImmutableBlockVolume getBlockView(Matrix4d transform);
 
     /**
@@ -68,6 +70,7 @@ public interface ImmutableBlockVolume extends BlockVolume {
      *
      * @return The new volume with its minimum at zero
      */
+    @Override
     ImmutableBlockVolume getRelativeBlockView();
 
 }

@@ -68,6 +68,7 @@ public interface MutableBiomeArea extends BiomeArea {
      * @throws PositionOutOfBoundsException If the new minimum and maximum
      *     are outside the current area
      */
+    @Override
     MutableBiomeArea getBiomeView(Vector2i newMin, Vector2i newMax);
 
     /**
@@ -79,6 +80,7 @@ public interface MutableBiomeArea extends BiomeArea {
      *     A 3D matrix is used so that translations can be included in it.
      * @return The new area with the transform
      */
+    @Override
     MutableBiomeArea getBiomeView(Matrix3d transform);
 
     /**
@@ -89,16 +91,7 @@ public interface MutableBiomeArea extends BiomeArea {
      *
      * @return The new area with its minimum at zero
      */
+    @Override
     MutableBiomeArea getRelativeBiomeView();
-
-    /**
-     * Returns a new area that cannot be modified through this view. Unlike
-     * immutable storage, it can be changed by holders of mutable views.
-     * This does not copy the biomes, it only provides a new view of the
-     * storage.
-     *
-     * @return The new area, which cannot be modified
-     */
-    UnmodifiableBiomeArea getUnmodifiableBiomeView();
 
 }

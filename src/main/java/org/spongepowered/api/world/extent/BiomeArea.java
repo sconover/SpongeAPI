@@ -24,6 +24,7 @@
  */
 package org.spongepowered.api.world.extent;
 
+import com.flowpowered.math.matrix.Matrix3d;
 import com.flowpowered.math.vector.Vector2i;
 import org.spongepowered.api.util.PositionOutOfBoundsException;
 import org.spongepowered.api.world.biome.BiomeType;
@@ -103,6 +104,50 @@ public interface BiomeArea {
      *     bounds of the area
      */
     BiomeType getBiome(int x, int z);
+
+    /**
+     * Returns a new area that is the same or smaller than the current area.
+     * This does not copy the biomes, it only provides a new view of the
+     * storage.
+     *
+     * @param newMin The new minimum coordinates in this area
+     * @param newMax The new maximum coordinates in this area
+     * @return The new area with the new bounds
+     * @throws PositionOutOfBoundsException If the new minimum and maximum
+     *     are outside the current area
+     */
+    BiomeArea getBiomeView(Vector2i newMin, Vector2i newMax);
+
+    /**
+     * Returns a new area that is viewed through some transformation.
+     * This does not copy the biomes, it only provides a new view of the
+     * storage.
+     *
+     * @param transform The transformation to be applied, encoded in a matrix.
+     *     A 3D matrix is used so that translations can be included in it.
+     * @return The new area with the transform
+     */
+    BiomeArea getBiomeView(Matrix3d transform);
+
+    /**
+     * Returns a new area that is translated so that
+     * {@link BiomeArea#getBiomeMin()} returns {@link Vector2i#ZERO}.
+     * This does not copy the biomes, it only provides a new view of the
+     * storage.
+     *
+     * @return The new area with its minimum at zero
+     */
+    BiomeArea getRelativeBiomeView();
+
+    /**
+     * Returns a new area that cannot be modified through this view. Unlike
+     * immutable storage, it can be changed by holders of mutable views.
+     * This does not copy the biomes, it only provides a new view of the
+     * storage.
+     *
+     * @return The new area, which cannot be modified
+     */
+    UnmodifiableBiomeArea getUnmodifiableBiomeView();
 
     /**
      * Returns a mutable copy of the biomes stored in this area.

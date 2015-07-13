@@ -86,9 +86,9 @@ public interface MutableBlockVolume extends BlockVolume {
     void setBlockType(int x, int y, int z, BlockType type);
 
     /**
-     * Returns a new volume that is the same or smaller than the current area.
-     * This does not copy the blocks, it only provides a new view of the
-     * storage.
+     * Returns a new volume that is the same or smaller than the current
+     * volume. This does not copy the blocks, it only provides a new view
+     * of the storage.
      *
      * @param newMin The new minimum coordinates in this volume
      * @param newMax The new maximum coordinates in this volume
@@ -96,6 +96,7 @@ public interface MutableBlockVolume extends BlockVolume {
      * @throws PositionOutOfBoundsException If the new minimum and maximum
      *     are outside the current volume
      */
+    @Override
     MutableBlockVolume getBlockView(Vector3i newMin, Vector3i newMax);
 
     /**
@@ -107,6 +108,7 @@ public interface MutableBlockVolume extends BlockVolume {
      *     A 4D matrix is used so that translations can be included in it.
      * @return The new volume with the transform
      */
+    @Override
     MutableBlockVolume getBlockView(Matrix4d transform);
 
     /**
@@ -117,16 +119,7 @@ public interface MutableBlockVolume extends BlockVolume {
      *
      * @return The new volume with its minimum at zero
      */
+    @Override
     MutableBlockVolume getRelativeBlockView();
-
-    /**
-     * Returns a new volume that cannot be modified through this view. Unlike
-     * immutable storage, it can be changed by holders of mutable views.
-     * This does not copy the blocks, it only provides a new view of the
-     * storage.
-     *
-     * @return The new volume, which cannot be modified
-     */
-    UnmodifiableBlockVolume getUnmodifiableBlockView();
 
 }

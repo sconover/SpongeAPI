@@ -47,6 +47,7 @@ public interface UnmodifiableBiomeArea extends BiomeArea {
      * @throws PositionOutOfBoundsException If the new minimum and maximum
      *     are outside the current area
      */
+    @Override
     UnmodifiableBiomeArea getBiomeView(Vector2i newMin, Vector2i newMax);
 
     /**
@@ -58,6 +59,7 @@ public interface UnmodifiableBiomeArea extends BiomeArea {
      *     A 3D matrix is used so that translations can be included in it.
      * @return The new area with the transform
      */
+    @Override
     UnmodifiableBiomeArea getBiomeView(Matrix3d transform);
 
     /**
@@ -68,6 +70,7 @@ public interface UnmodifiableBiomeArea extends BiomeArea {
      *
      * @return The new area with its minimum at zero
      */
+    @Override
     UnmodifiableBiomeArea getRelativeBiomeView();
 
 }

@@ -24,6 +24,7 @@
  */
 package org.spongepowered.api.world.extent;
 
+import com.flowpowered.math.matrix.Matrix4d;
 import com.flowpowered.math.vector.Vector3i;
 import org.spongepowered.api.block.BlockState;
 import org.spongepowered.api.block.BlockType;
@@ -130,6 +131,50 @@ public interface BlockVolume {
      *     bounds of the block volume
      */
     BlockType getBlockType(int x, int y, int z);
+
+    /**
+     * Returns a new volume that is the same or smaller than the current
+     * volume. This does not copy the blocks, it only provides a new view
+     * of the storage.
+     *
+     * @param newMin The new minimum coordinates in this volume
+     * @param newMax The new maximum coordinates in this volume
+     * @return The new volume with the new bounds
+     * @throws PositionOutOfBoundsException If the new minimum and maximum
+     *     are outside the current volume
+     */
+    BlockVolume getBlockView(Vector3i newMin, Vector3i newMax);
+
+    /**
+     * Returns a new volume that is viewed through some transformation.
+     * This does not copy the blocks, it only provides a new view of the
+     * storage.
+     *
+     * @param transform The transformation to be applied, encoded in a matrix.
+     *     A 4D matrix is used so that translations can be included in it.
+     * @return The new volume with the transform
+     */
+    BlockVolume getBlockView(Matrix4d transform);
+
+    /**
+     * Returns a new volume that is translated so that
+     * {@link BlockVolume#getBlockMin()} returns {@link Vector3i#ZERO}.
+     * This does not copy the blocks, it only provides a new view of the
+     * storage.
+     *
+     * @return The new volume with its minimum at zero
+     */
+    BlockVolume getRelativeBlockView();
+
+    /**
+     * Returns a new volume that cannot be modified through this view. Unlike
+     * immutable storage, it can be changed by holders of mutable views.
+     * This does not copy the blocks, it only provides a new view of the
+     * storage.
+     *
+     * @return The new volume, which cannot be modified
+     */
+    UnmodifiableBlockVolume getUnmodifiableBlockView();
 
     /**
      * Returns a mutable copy of the blocks stored in this volume.
