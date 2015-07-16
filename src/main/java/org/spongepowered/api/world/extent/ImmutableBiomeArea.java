@@ -34,7 +34,7 @@ import org.spongepowered.api.util.PositionOutOfBoundsException;
  *
  * @see BiomeArea
  */
-public interface ImmutableBiomeArea extends BiomeArea {
+public interface ImmutableBiomeArea extends UnmodifiableBiomeArea {
 
     /**
      * Returns a new area that is the same or smaller than the current area.

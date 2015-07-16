@@ -34,7 +34,7 @@ import org.spongepowered.api.util.PositionOutOfBoundsException;
  *
  * @see BlockVolume
  */
-public interface ImmutableBlockVolume extends BlockVolume {
+public interface ImmutableBlockVolume extends UnmodifiableBlockVolume {
 
     /**
      * Returns a new volume that is the same or smaller than the current
