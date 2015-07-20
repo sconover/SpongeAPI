@@ -246,4 +246,12 @@ public interface Entity extends Identifiable, DataHolder, DataSerializable {
      */
     void remove();
 
+    /**
+     * Old means of identifying entities. Do not use except to support legacy functionality.
+     *
+     * @deprecated
+     *
+     * @return The integer identifer of the entity
+     */
+    int getEntityId();
 }
