@@ -47,4 +47,58 @@ public interface BlockState extends ImmutableDataHolder<BlockState> {
      */
     BlockType getType();
 
+    /**
+     * Set a property that has an enumerated type as the value, to the enum
+     * value corresponding to the ordinal.
+     *
+     * This only exists to support legacy data access methods, please do not use
+     * this unless it's because you are forced to maintain backward compatibility.
+     *
+     * @deprecated
+     *
+     * @param propertyName - the name of a property that has an enum value
+     * @param ordinal - the ordinal of some enum value, such as dye color lime.
+     * @return a new BlockState, with the property set
+     */
+    BlockState withPropertyEnumOrdinal(String propertyName, int ordinal);
+
+    /**
+     * For a property that has an enumerated type as the value, check whether the given
+     * ordinal corresponds to a valid enum value.
+     *
+     * This only exists to support legacy data access methods, please do not use
+     * this unless it's because you are forced to maintain backward compatibility.
+     *
+     * @param propertyName - the name of a property that has an enum value
+     * @param ordinal - the ordinal of the enum value
+     * @return whether the ordinal corresponds to a valid enum value
+     */
+    boolean isEnumOrdinalValid(String propertyName, int ordinal);
+
+    /**
+     * For a property that has an enumerated type as the value, return the enum ordinal for
+     * its enum value
+     *
+     * This only exists to support legacy data access methods, please do not use
+     * this unless it's because you are forced to maintain backward compatibility.
+     *
+     * @deprecated
+     *
+     * @param propertyName - the name of a property that has an enum value
+     * @return the ordinal of the enum value
+     */
+    int getPropertyEnumOrdinalValue(String propertyName);
+
+    /**
+     * Determine whether a block has a property, and that property has an enum value.
+     *
+     * This only exists to support legacy data access methods, please do not use
+     * this unless it's because you are forced to maintain backward compatibility.
+     *
+     * @deprecated
+     *
+     * @param propertyName - the name of a property that has an enum value
+     * @return whether or not this block has the property
+     */
+    boolean hasPropertyEnum(String propertyName);
 }
