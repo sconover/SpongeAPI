@@ -103,4 +103,14 @@ public interface BlockState extends ImmutableDataHolder<BlockState> {
     boolean hasPropertyEnum(String propertyName);
 
     BlockMetadata getMetadata();
+
+    /**
+     * Look up a property by its string name, and if the value represents an enum value,
+     * look up the enum value by its name, set the property, and return a new BlockState
+     *
+     * @param propertyName String name of a property
+     * @param value An integer, boolean, or String form of an enum value
+     * @return a new BlockState, with the property set
+     */
+    BlockState withPropertyByPrimitives(String propertyName, Comparable value);
 }
