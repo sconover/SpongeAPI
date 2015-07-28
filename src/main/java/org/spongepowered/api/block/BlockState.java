@@ -101,4 +101,6 @@ public interface BlockState extends ImmutableDataHolder<BlockState> {
      * @return whether or not this block has the property
      */
     boolean hasPropertyEnum(String propertyName);
+
+    BlockMetadata getMetadata();
 }
