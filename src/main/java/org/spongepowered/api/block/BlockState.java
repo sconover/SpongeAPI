@@ -24,6 +24,7 @@
  */
 package org.spongepowered.api.block;
 
+import java.util.Map;
 import org.spongepowered.api.data.DataManipulator;
 import org.spongepowered.api.data.ImmutableDataHolder;
 
@@ -113,4 +114,11 @@ public interface BlockState extends ImmutableDataHolder<BlockState> {
      * @return a new BlockState, with the property set
      */
     BlockState withPropertyByPrimitives(String propertyName, Comparable value);
+
+    /**
+     * Get properties and their values. Property names are strings, property values are either
+     * string, boolean, or int, depending on property type.
+     * @return map of property name to property value (string, int, or boolean)
+     */
+    Map<String,Object> getPrimitiveProperties();
 }
