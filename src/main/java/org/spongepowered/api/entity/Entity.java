@@ -25,6 +25,8 @@
 package org.spongepowered.api.entity;
 
 import com.flowpowered.math.vector.Vector3d;
+import java.util.EnumSet;
+import java.util.UUID;
 import org.spongepowered.api.data.DataHolder;
 import org.spongepowered.api.data.DataSerializable;
 import org.spongepowered.api.data.manipulator.TargetedLocationData;
@@ -34,9 +36,6 @@ import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.TeleportHelper;
 import org.spongepowered.api.world.World;
 import org.spongepowered.api.world.storage.WorldProperties;
-
-import java.util.EnumSet;
-import java.util.UUID;
 
 /**
  * An entity is a Minecraft entity.

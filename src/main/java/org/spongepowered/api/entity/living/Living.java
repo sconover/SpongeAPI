@@ -24,6 +24,7 @@
  */
 package org.spongepowered.api.entity.living;
 
+import java.util.List;
 import org.spongepowered.api.data.manipulator.entity.DamageableData;
 import org.spongepowered.api.data.manipulator.entity.HealthData;
 import org.spongepowered.api.entity.Entity;
@@ -52,5 +53,8 @@ public interface Living extends Entity {
     DamageableData getMortalData();
 
 
+    List<String> getTaskNames();
 
+    void startTask(String taskName);
+    void resetTask(String taskName);
 }
