@@ -25,8 +25,8 @@
 package org.spongepowered.api.entity.living.animal;
 
 /**
- * Represents a Wolf.
+ * Represents a tameable animal, such as a Wolf.
  */
-public interface Wolf extends Tameable {
+public interface Tameable extends Animal, CanBeOwned {
 
 }

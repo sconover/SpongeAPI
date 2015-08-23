@@ -31,7 +31,7 @@ import org.spongepowered.api.item.inventory.Carrier;
 /**
  * Represents a Horse.
  */
-public interface Horse extends Animal, Agent, Carrier {
+public interface Horse extends Animal, Agent, Carrier, CanBeOwned {
 
     /**
      * Gets a copy of the {@link HorseData} representing this {@link Horse}.
