@@ -28,5 +28,5 @@ package org.spongepowered.api.entity.living.animal;
  * Represents a tameable animal, such as a Wolf.
  */
 public interface Tameable extends Animal, CanBeOwned {
-
+  boolean isSitting();
 }
